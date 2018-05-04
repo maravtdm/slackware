@@ -1,3 +1,3 @@
 # slackware
 
-slackpkgplus and sbopkg+ conf 
+slackpkg, slackpkgplus and sbopkg+ conf 
