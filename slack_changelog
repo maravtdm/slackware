@@ -56,6 +56,7 @@ $_number_upgraded Upgraded%0D\
 $_number_added Added%0D\
 $_number_rebuilt Rebuilt%0D\
 $_number_removed Removed"
+  # Rotate the txt files
   cp $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt
   cp $_change_dir/ChangeLog.2.md5 $_change_dir/ChangeLog.2.md5.bak  # keep a backup, for rollback/tests
   cp $_change_dir/ChangeLog.1.md5 $_change_dir/ChangeLog.2.md5
