@@ -49,13 +49,8 @@ _number_removed=${_number_removed_1:-0}
 if [ ${_md5_1} = ${_md5_2} ] ; then
   exit 0
 else
-  /usr/local/bin/curl https://smsapi.free-mobile.fr/sendmsg\?user\=XXXXXXXX\&pass\=**********\&msg\=\
-"Slackware: $_number_total updates availables%0D\
-----------%0D\
-$_number_upgraded Upgraded%0D\
-$_number_added Added%0D\
-$_number_rebuilt Rebuilt%0D\
-$_number_removed Removed"
+# Put here your program to send SMS or email
+  /usr/bin/... 
   # Rotate the txt files
   cp $_change_dir/ChangeLog.2.txt $_change_dir/ChangeLog.2.txt.bak  # keep a backup, for rollback/tests
   cp $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt
