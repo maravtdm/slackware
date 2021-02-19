@@ -28,13 +28,17 @@ _number_total=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
 	| grep -e Upgraded -e Added -e Rebuilt -e Removed | wc -l | sed 's/ *//g'
 	)
 _number_upgraded_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
-	| grep -e txz -e img -e "kernel/*" | grep -e Upgraded | wc -l | sed 's/ *//g')
+	| grep -e txz -e img -e "kernel/*" | grep -e Upgraded | wc -l | sed 's/ *//g'
+	)
 _number_added_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
-	| grep -e txz -e img -e "kernel/*" | grep -e Added | wc -l | sed 's/ *//g')
+	| grep -e txz -e img -e "kernel/*" | grep -e Added | wc -l | sed 's/ *//g'
+	)
 _number_rebuilt_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
-	| grep -e txz -e img -e "kernel/*" | grep -e Rebuilt | wc -l | sed 's/ *//g')
+	| grep -e txz -e img -e "kernel/*" | grep -e Rebuilt | wc -l | sed 's/ *//g'
+	)
 _number_removed_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
-	| grep -e txz -e img -e "kernel/*" | grep -e Removed | wc -l | sed 's/ *//g')
+	| grep -e txz -e img -e "kernel/*" | grep -e Removed | wc -l | sed 's/ *//g'
+	)
 ### ECHO NUMBERS, ELSE ECHO "0"
 _number_upgraded=${_number_upgraded_1:-0}
 _number_added=${_number_added_1:-0}
