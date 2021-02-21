@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-#set -x
+
 _change_dir="$HOME/changelog"
 _distrib=$(cat /etc/os-release | awk -F= '/^NAME/ {print $2}')
 
