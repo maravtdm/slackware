@@ -39,18 +39,31 @@ _number_rebuilt_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.t
 _number_removed_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
 	| grep -e txz -e img -e "kernel/*" | grep -e Removed | wc -l | sed 's/ *//g'
 	)
+_number_security_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
+	| grep -e Security | wc -l | sed 's/ *//g'
+	)
 ### ECHO NUMBERS, ELSE ECHO "0"
 _number_upgraded=${_number_upgraded_1:-0}
 _number_added=${_number_added_1:-0}
 _number_rebuilt=${_number_rebuilt_1:-0}
 _number_removed=${_number_removed_1:-0}
+_number_security=${_number_security_1:-0}
 
 ### MAIN
 if [ ${_md5_1} = ${_md5_2} ] ; then
   exit 0
 else
-# Put here your program to send SMS or email
+# Put here your favorite program to send SMS or email
   /usr/bin/... 
+# And something like:
+echo -e "Slackware: $_number_total updates availables\n
+----------\n
+$_number_upgraded Upgraded\n
+$_number_added Added\n
+$_number_rebuilt Rebuilt\n
+$_number_removed Removed\n
+Include: $_number_security Security fix"
+  
   # Rotate the txt files
   cp $_change_dir/ChangeLog.2.txt $_change_dir/ChangeLog.2.txt.bak  # keep a backup, for rollback/tests
   cp $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt
