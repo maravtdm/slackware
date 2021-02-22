@@ -57,12 +57,12 @@ else
   /usr/bin/... 
 # And something like:
 echo -e "Slackware: $_number_total updates availables\n
-----------\n
-$_number_upgraded Upgraded\n
-$_number_added Added\n
-$_number_rebuilt Rebuilt\n
-$_number_removed Removed\n
-Include: $_number_security Security fix"
+echo -e "----------\n
+echo -e "$_number_upgraded Upgraded\n
+echo -e "$_number_added Added\n
+echo -e "$_number_rebuilt Rebuilt\n
+echo -e "$_number_removed Removed\n
+echo -e "Include: $_number_security Security fix"
   
   # Rotate the txt files
   cp $_change_dir/ChangeLog.2.txt $_change_dir/ChangeLog.2.txt.bak  # keep a backup, for rollback/tests
