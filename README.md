@@ -3,8 +3,8 @@
 slackpkg, slackpkgplus and sbopkg+ conf 
 
 
-### The salck_changelog script ###
-Is for auto fetch new changelog from slackware.com and inform by mail/sms/wahetever you want
+#### The salck_changelog script ####
+Stay inform by mail/sms/wahetever you want, for new current changelog from ftp.slackware.com (need to be adjust for the 14.2)
 
 Here is the stdout:
 ```
