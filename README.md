@@ -1,9 +1,6 @@
 # slackware
 
-slackpkg, slackpkgplus and sbopkg+ conf 
-
-
-#### The slack_changelog script ####
+#### slack_changelog script ####
 Stay inform by mail/sms/wahetever you want, for new current changelog from ftp.slackware.com (need to be adjust for the 14.2)
 
 Here is the stdout:
