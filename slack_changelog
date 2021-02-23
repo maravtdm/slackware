@@ -3,6 +3,11 @@
 _change_dir="$HOME/changelog"
 _distrib=$(cat /etc/os-release | awk -F= '/^NAME/ {print $2}')
 
+# CREDENTIALS
+_user=$(cat $_change_dir/credential | awk '/user/ {print $2}')
+_pass=$(cat $_change_dir/credential | awk '/pass/ {print $2}')
+_url=$(cat $_change_dir/credential | awk '/url/ {print $2}')
+
 ### FETCH CHANGELOG.TXT
 curl -k -q --no-progress-meter -o $_change_dir/ChangeLog.1.txt http://ftp.slackware.com/pub/slackware/slackware64-current/ChangeLog.txt
 ### MD5SUM
@@ -24,20 +29,27 @@ fi
 
 ### COUNT
 _number_total=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
-	| grep -e txz -e img -e "kernel/*" \
-	| grep -e Upgraded -e Added -e Rebuilt -e Removed | wc -l | sed 's/ *//g'
+	| grep -e txz  -e img -e "kernel/*" | grep -e Upgraded -e Added -e Rebuilt -e Removed \
+  | wc -l | sed 's/ *//g'
+	)
+_number_total_test_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
+	| grep -e txz  | grep -e testing | wc -l | sed 's/ *//g'
 	)
 _number_upgraded_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
-	| grep -e txz -e img -e "kernel/*" | grep -e Upgraded | wc -l | sed 's/ *//g'
+	| grep -e txz -e img -e "kernel/*" | grep -e Upgraded \
+  | grep -v testing | wc -l | sed 's/ *//g'
 	)
 _number_added_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
-	| grep -e txz -e img -e "kernel/*" | grep -e Added | wc -l | sed 's/ *//g'
+	| grep -e txz -e img -e "kernel/*" | grep -e Added \
+  | grep -v testing | wc -l | sed 's/ *//g'
 	)
 _number_rebuilt_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
-	| grep -e txz -e img -e "kernel/*" | grep -e Rebuilt | wc -l | sed 's/ *//g'
+	| grep -e txz -e img -e "kernel/*" | grep -e Rebuilt \
+  | grep -v testing | wc -l | sed 's/ *//g'
 	)
 _number_removed_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
-	| grep -e txz -e img -e "kernel/*" | grep -e Removed | wc -l | sed 's/ *//g'
+	| grep -e txz -e img -e "kernel/*" | grep -e Removed \
+  | grep -v testing | wc -l | sed 's/ *//g'
 	)
 _number_security_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
 	| grep -e Security | wc -l | sed 's/ *//g'
@@ -48,25 +60,23 @@ _number_added=${_number_added_1:-0}
 _number_rebuilt=${_number_rebuilt_1:-0}
 _number_removed=${_number_removed_1:-0}
 _number_security=${_number_security_1:-0}
+_number_total_test=${_number_total_test_1:-0}
 
 ### MAIN
-if [ ${_md5_1} = ${_md5_2} ] ; then
+if [ ${_md5_1} = ${_md5_2} ]; then
   exit 0
 else
-# Put here your favorite program to send SMS or email
-  /usr/bin/... 
-# And something like:
-echo -e "Slackware: $_number_total updates availables\n"
-echo -e "----------\n"
-echo -e "$_number_upgraded Upgraded\n"
-echo -e "$_number_added Added\n"
-echo -e "$_number_rebuilt Rebuilt\n"
-echo -e "$_number_removed Removed\n"
-echo -e "Include: $_number_security Security fix"
-  
+  /usr/local/bin/curl ${_url}\?user\=${_user}\&pass\=${_pass}\&msg\="Slackware: $_number_total updates availables%0D\
+----------%0D\
+$_number_upgraded Upgraded%0D\
+$_number_added Added%0D\
+$_number_rebuilt Rebuilt%0D\
+$_number_removed Removed%0D\
+Include: $_number_security Security fix%0D\
+Include: $_number_total_test Testing"
   # Rotate the txt files
   cp $_change_dir/ChangeLog.2.txt $_change_dir/ChangeLog.2.txt.bak  # keep a backup, for rollback/tests
-  cp $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt
+	cp $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt
   cp $_change_dir/ChangeLog.2.md5 $_change_dir/ChangeLog.2.md5.bak  # keep a backup, for rollback/tests
   cp $_change_dir/ChangeLog.1.md5 $_change_dir/ChangeLog.2.md5
 fi
