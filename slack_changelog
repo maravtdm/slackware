@@ -16,44 +16,46 @@ _md5_1=$(cat $_change_dir/ChangeLog.1.md5 | cut -d= -f2 | sed 's/ //')
 
 ### IN CASE OF EXECUTION IS NOT UNDER A SLACK BOX
 if [ $_distrib = "Slackware" ]; then
-	md5 /var/lib/slackpkg/ChangeLog.txt > $_change_dir/ChangeLog.2.md5
-	_md5_2=$(cat $_change_dir/ChangeLog.2.md5 | cut -d= -f2 | sed 's/ //')
+  md5 /var/lib/slackpkg/ChangeLog.txt > $_change_dir/ChangeLog.2.md5
+  _md5_2=$(cat $_change_dir/ChangeLog.2.md5 | cut -d= -f2 | sed 's/ //')
 else
-	if [ -f $_change_dir/ChangeLog.2.md5 ]; then
-		_md5_2=$(cat $_change_dir/ChangeLog.2.md5 | cut -d= -f2 | sed 's/ //')
-	else
-		touch $_change_dir/ChangeLog.2.txt
-		md5 $_change_dir/ChangeLog.2.txt > $_change_dir/ChangeLog.2.md5
-	fi
+  if [ -f $_change_dir/ChangeLog.2.md5 ]; then
+    _md5_2=$(cat $_change_dir/ChangeLog.2.md5 | cut -d= -f2 | sed 's/ //')
+  else
+    touch $_change_dir/ChangeLog.2.txt
+    md5 $_change_dir/ChangeLog.2.txt > $_change_dir/ChangeLog.2.md5
+  fi
 fi
 
 ### COUNT
 _number_total=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
-	| grep -e txz  -e img -e "kernel/*" | grep -e Upgraded -e Added -e Rebuilt -e Removed \
+  | grep -e txz  -e img -e "kernel/*" \
+  | grep -e Upgraded -e Added -e Rebuilt -e Removed \
   | wc -l | sed 's/ *//g'
 	)
 _number_total_test_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
-	| grep -e txz  | grep -e testing | wc -l | sed 's/ *//g'
+  | grep -e txz  | grep -e testing \
+  | wc -l | sed 's/ *//g'
 	)
 _number_upgraded_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
-	| grep -e txz -e img -e "kernel/*" | grep -e Upgraded \
+  | grep -e txz -e img -e "kernel/*" | grep -e Upgraded \
   | grep -v testing | wc -l | sed 's/ *//g'
-	)
+  )
 _number_added_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
-	| grep -e txz -e img -e "kernel/*" | grep -e Added \
+  | grep -e txz -e img -e "kernel/*" | grep -e Added \
   | grep -v testing | wc -l | sed 's/ *//g'
-	)
+  )
 _number_rebuilt_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
-	| grep -e txz -e img -e "kernel/*" | grep -e Rebuilt \
+  | grep -e txz -e img -e "kernel/*" | grep -e Rebuilt \
   | grep -v testing | wc -l | sed 's/ *//g'
-	)
+  )
 _number_removed_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
-	| grep -e txz -e img -e "kernel/*" | grep -e Removed \
+  | grep -e txz -e img -e "kernel/*" | grep -e Removed \
   | grep -v testing | wc -l | sed 's/ *//g'
-	)
+  )
 _number_security_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
-	| grep -e Security | wc -l | sed 's/ *//g'
-	)
+  | grep -e Security | wc -l | sed 's/ *//g'
+  )
 ### ECHO NUMBERS, ELSE ECHO "0"
 _number_upgraded=${_number_upgraded_1:-0}
 _number_added=${_number_added_1:-0}
@@ -76,7 +78,7 @@ Include: $_number_security Security fix%0D\
 Include: $_number_total_test Testing"
   # Rotate the txt files
   cp $_change_dir/ChangeLog.2.txt $_change_dir/ChangeLog.2.txt.bak  # keep a backup, for rollback/tests
-	cp $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt
+  cp $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt
   cp $_change_dir/ChangeLog.2.md5 $_change_dir/ChangeLog.2.md5.bak  # keep a backup, for rollback/tests
   cp $_change_dir/ChangeLog.1.md5 $_change_dir/ChangeLog.2.md5
 fi
