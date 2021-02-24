@@ -32,11 +32,11 @@ _number_total=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
   | grep -e txz  -e img -e "kernel/*" \
   | grep -e Upgraded -e Added -e Rebuilt -e Removed \
   | wc -l | sed 's/ *//g'
-	)
+  )
 _number_total_test_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
   | grep -e txz  | grep -e testing \
   | wc -l | sed 's/ *//g'
-	)
+  )
 _number_upgraded_1=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
   | grep -e txz -e img -e "kernel/*" | grep -e Upgraded \
   | grep -v testing | wc -l | sed 's/ *//g'
