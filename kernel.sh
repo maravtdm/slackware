@@ -27,15 +27,16 @@ if [[ -L linux ]]; then
 fi
 ln -s linux-${VERSION} linux
 
-# Built kernel
 cd linux
+# Fetch the current config
 zcat /proc/config.gz > .config
 make olddefconfig
+# Built kernel
 make -j4 all
-# make the compiled kernel bootable
-cat arch/x86/boot/bzImage > /boot/vmlinuz-stable
 # install modules
 make -j4 modules_install
+# make the compiled kernel bootable
+cat arch/x86/boot/bzImage > /boot/vmlinuz-stable
 
 ### make initrd, you need to customize /etc/mkinitrd.conf
 ### output initrd.gz must be : /boot/initrd.gz-stable
