@@ -1,4 +1,14 @@
 #!/bin/sh
+### Download & compile latest stable kernel
+### in /usr/local/src
+### Bootloader : lilo
+###
+### /etclilo.conf entry :
+### image = /boot/vmlinuz-stable
+###   initrd = /boot/initrd.gz-stable
+###   root = /dev/sda1
+###   label = "Latest stable"
+###   read-only
 
 SRC="/usr/local/src"
 cd $SRC
@@ -26,7 +36,9 @@ make -j4 all
 cat arch/x86/boot/bzImage > /boot/vmlinuz-stable
 # install modules
 make -j4 modules_install
-# make initrd
+
+### make initrd, you need to customize /etc/mkinitrd.conf
+### output initrd.gz must be : /boot/initrd.gz-stable
 mkinitrd -F -c -k ${VERSION} 
 # update lilo
 lilo -v
