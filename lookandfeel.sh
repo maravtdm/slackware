@@ -11,7 +11,7 @@ DAY=$(date "+%d %b %Y")
 # Wait for the network
 sleep 10s 
 # go to https://www.lecalendrier.fr/calendrier-solaire and choose your city, and note the zip code a the end of url
-# Zip code modification requiert a log out/in to relaunch the script
+# Zip code modifications requiert a log out/in 
 # Example, for Paris/France
 CITY=30799
 curl https://www.lecalendrier.fr/calendrier-solaire\?city\=${CITY} > $HOME/.bin/city.out
