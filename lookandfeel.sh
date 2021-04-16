@@ -1,6 +1,8 @@
 #!/bin/sh
 ### Script must be placed in $HOME/.bin
-### Load the script in : System settings / 
+###
+### Autostart with session :
+### Add the script to : System settings / Startup and Shutdown / autostart
 
 LOOK=$(cat $HOME/.config/kdeglobals | awk -F"=" '/LookAndFeelPackage/ {print $2}')
 DATE=$(date +%H%M)
