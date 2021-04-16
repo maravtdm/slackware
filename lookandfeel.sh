@@ -5,6 +5,8 @@ LOOK=$(cat $HOME/.config/kdeglobals | awk -F"=" '/LookAndFeelPackage/ {print $2}
 DATE=$(date +%H%M)
 DAY=$(date "+%d %b %Y")
 
+# Wait for the network
+sleep 10s 
 # go to https://www.lecalendrier.fr/calendrier-solaire and choose your city, and note the zip code a the end of url
 # Example, for Paris/France
 CITY=30799
