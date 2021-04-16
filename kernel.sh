@@ -39,7 +39,17 @@ make -j4 modules_install
 cat arch/x86/boot/bzImage > /boot/vmlinuz-stable
 
 ### make initrd, you need to customize /etc/mkinitrd.conf
-### output initrd.gz must be : /boot/initrd.gz-stable
+###
+### /etc/mkinitrd.conf
+### SOURCE_TREE="/boot/initrd-tree"
+### CLEAR_TREE="1"
+### OUTPUT_IMAGE="/boot/initrd.gz-stable" 
+### MODULE_LIST="ext4:zram"    #adapt module list to match your needs
+### ROOTDEV="/dev/sda1"
+### ROOTFS="ext4"
+### UDEV="1"
+### WAIT="1"
+
 mkinitrd -F -c -k ${VERSION} 
 # update lilo
 lilo -v
