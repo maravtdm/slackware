@@ -5,7 +5,7 @@ DATE=$(date +%H%M)
 DAY=$(date "+%d %b %Y")
 
 # go to https://www.lecalendrier.fr/calendrier-solaire and choose your city, and note the zip code a the end of url
-# Example, for Patis
+# Example, for Paris/France
 CITY=30799
 curl https://www.lecalendrier.fr/calendrier-solaire\?city\=${CITY} > $HOME/.bin/city.out
 
