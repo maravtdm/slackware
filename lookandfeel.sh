@@ -1,4 +1,6 @@
 #!/bin/sh
+### Change plasma5 look between 9AM and 7PM (timezone CEST)
+### Switch : Twilight theme <> Dark theme
 
 LOOK=$(cat $HOME/.config/kdeglobals | awk -F"=" '/LookAndFeelPackage/ {print $2}')
 DATE=$(date +%H%M)
