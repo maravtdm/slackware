@@ -27,5 +27,6 @@ while [ "${DATE}" -lt "2359" ] ; do
   fi
   LOOK=$(cat $HOME/.config/kdeglobals | awk -F"=" '/LookAndFeelPackage/ {print $2}')
   DATE=$(date +%H%M)
+  DAY=$(date "+%d %b %Y")
   sleep 10m
 done
