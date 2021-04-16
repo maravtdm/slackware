@@ -1,4 +1,5 @@
 #!/bin/sh
+### Script must be placed in $HOME/.bin
 
 LOOK=$(cat $HOME/.config/kdeglobals | awk -F"=" '/LookAndFeelPackage/ {print $2}')
 DATE=$(date +%H%M)
