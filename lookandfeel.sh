@@ -1,4 +1,5 @@
 #!/bin/sh
+### Day/Night Switch between Twilight & Dark plasma5 theme  
 ### Script must be placed in $HOME/.bin
 ###
 ### Autostart with session :
