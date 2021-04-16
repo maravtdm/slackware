@@ -1,10 +1,16 @@
 #!/bin/sh
-### Change plasma5 look between 9AM and 7PM (timezone CEST)
-### Switch : Twilight theme <> Dark theme
 
-# Modify this according to your needs (hhmm)
-START="0900"
-END="1900"
+LOOK=$(cat $HOME/.config/kdeglobals | awk -F"=" '/LookAndFeelPackage/ {print $2}')
+DATE=$(date +%H%M)
+DAY=$(date "+%d %b %Y")
+
+# go to https://www.lecalendrier.fr/calendrier-solaire and choose your city, and note the zip code a the end of url
+# Example, for Patis
+CITY=30799
+curl https://www.lecalendrier.fr/calendrier-solaire\?city\=${CITY} > $HOME/.bin/city.out
+
+START=$(cat $HOME/.bin/city.out | grep "${DAY}" | tail -n2 | cut -d">" -f5 | cut -d"<" -f1 | sed 's/h//' | head -1)
+END=$(cat $HOME/.bin/city.out | grep "${DAY}" | tail -n2 | cut -d">" -f7 | cut -d"<" -f1 | sed 's/h//' | head -1)
 
 while [ "${DATE}" -lt "2359" ] ; do
   if [ "${DATE}" -lt "${END}" ] && [ "${DATE}" -gt "${START}" ] ; then
@@ -22,6 +28,3 @@ while [ "${DATE}" -lt "2359" ] ; do
   DATE=$(date +%H%M)
   sleep 10m
 done
-
-
-
