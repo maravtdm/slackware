@@ -15,7 +15,7 @@ sleep 10s
 # Zip code modifications requiert a log out/in 
 # Example, for Paris/France
 CITY=30799
-curl https://www.lecalendrier.fr/calendrier-solaire\?city\=${CITY} > $HOME/.bin/city.out
+curl https://www.lecalendrier.fr/calendrier-solaire\?city=${CITY} > $HOME/.bin/city.out
 
 while [ "${DATE}" -lt "2359" ] ; do
   START=$(cat $HOME/.bin/city.out | grep "${DAY}" | tail -n2 | cut -d">" -f5 | cut -d"<" -f1 | sed 's/h//' | head -1)
