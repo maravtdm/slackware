@@ -18,7 +18,6 @@ DAY=$(date "+%d %b %Y")
 
 # Wait for the network, specialy with wireless connection
 sleep 10s 
-
 # Modify this according to your needs (hhmm)
 # Or go to https://www.lecalendrier.fr/calendrier-solaire and choose your city, and note the zip code a the end of url
 CITY=30799
