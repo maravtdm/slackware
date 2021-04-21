@@ -32,9 +32,9 @@ cd linux
 zcat /proc/config.gz > .config
 make olddefconfig
 # Built kernel
-make -j4 all
+make all
 # install modules
-make -j4 modules_install
+make modules_install
 # make the compiled kernel bootable
 cat arch/x86/boot/bzImage > /boot/vmlinuz-stable
 
