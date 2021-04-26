@@ -4,6 +4,8 @@
 ###
 ### Autostart with session :
 ### Add the script to : System settings / Startup and Shutdown / autostart
+### You can also use the daemon's version of this script
+### see : https://github.com/maravtdm/lookandfeel/
 
 # Log everything
 exec 3>&1 4>&2
