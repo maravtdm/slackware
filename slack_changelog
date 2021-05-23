@@ -8,31 +8,21 @@ exec 1>>$HOME/changelog/changelog.log 2>&1
 set -x
 
 _change_dir="$HOME/changelog"
-_distrib=$(cat /etc/os-release | awk -F= '/^NAME/ {print $2}')
 
 # CREDENTIALS
-_user=$(cat $_change_dir/credential | awk '/user/ {print $2}')
-_pass=$(cat $_change_dir/credential | awk '/pass/ {print $2}')
-_url=$(cat $_change_dir/credential | awk '/url/ {print $2}')
+_user=$(cat $_change_dir/credential | awk '/user/,$0=$2')
+_pass=$(cat $_change_dir/credential | awk '/pass/,$0=$2')
+_url=$(cat $_change_dir/credential | awk '/url/,$0=$2')
 
 ### FETCH CHANGELOG.TXT
 curl -k -q --no-progress-meter -o $_change_dir/ChangeLog.1.txt http://ftp.slackware.com/pub/slackware/slackware64-current/ChangeLog.txt
+
 ### MD5SUM
 md5 $_change_dir/ChangeLog.1.txt > $_change_dir/ChangeLog.1.md5
 _md5_1=$(cat $_change_dir/ChangeLog.1.md5 | cut -d= -f2 | sed 's/ //')
 
-### IN CASE OF EXECUTION IS NOT UNDER A SLACK BOX
-if [ $_distrib = "Slackware" ]; then
-  md5 /var/lib/slackpkg/ChangeLog.txt > $_change_dir/ChangeLog.2.md5
-  _md5_2=$(cat $_change_dir/ChangeLog.2.md5 | cut -d= -f2 | sed 's/ //')
-else
-  if [ -f $_change_dir/ChangeLog.2.md5 ]; then
-    _md5_2=$(cat $_change_dir/ChangeLog.2.md5 | cut -d= -f2 | sed 's/ //')
-  else
-    touch $_change_dir/ChangeLog.2.txt
-    md5 $_change_dir/ChangeLog.2.txt > $_change_dir/ChangeLog.2.md5
-  fi
-fi
+md5 /var/lib/slackpkg/ChangeLog.txt > $_change_dir/ChangeLog.2.md5
+_md5_2=$(cat $_change_dir/ChangeLog.2.md5 | cut -d= -f2 | sed 's/ //')
 
 ### COUNT
 _number_total=$(diff $_change_dir/ChangeLog.1.txt $_change_dir/ChangeLog.2.txt \
